@@ -1,0 +1,165 @@
+import time
+import random
+import pyttsx3  # For AI voice assistance
+import speech_recognition as sr  # For voice input
+
+# Initialize Text-to-Speech engine
+engine = pyttsx3.init()
+
+
+def speak(text):
+    """Function to speak the given text."""
+    engine.say(text)
+    engine.runAndWait()
+
+
+class Stresscontrol:
+    # A class to handle stress-relief exercises and tips
+
+    def deep_breathing_exercise(self):
+        print("\n--- Deep Breathing Exercise ---\n")
+        speak("Let's begin the deep breathing exercise. Follow my instructions.")
+
+        inhale_time, hold_time, exhale_time = 4, 4, 4
+        for i in range(3):
+            print(f"\nRound {i + 1}:")
+            speak("Inhale slowly.")
+            print("Inhale slowly... 💨")
+            time.sleep(inhale_time)
+
+            speak("Hold your breath.")
+            print("Hold your breath...")
+            time.sleep(hold_time)
+
+            speak("Exhale slowly.")
+            print("Exhale slowly... 💨")
+            time.sleep(exhale_time)
+
+        speak("Great job! You did well.")
+        print("\nGreat job! You did well.\n")
+
+    def positive_affirmations(self):
+        affirmations = [
+            "I am capable of handling any challenge.",
+            "I am strong, resilient, and brave.",
+            "Today is a new day full of opportunities.",
+            "I believe in myself and my abilities.",
+            "I am calm, relaxed, and in control."
+        ]
+        affirmation = random.choice(affirmations)
+
+        print("\n--- Positive Affirmations ---\n")
+        speak("Here is a positive affirmation for you.")
+        print(f"- {affirmation}")
+        speak(affirmation)
+
+        print("\nRepeat this affirmation to feel more positive.")
+        speak("Repeat this affirmation to feel more positive.")
+
+    def stress_management_tips(self):
+        tips = [
+            "Take care of yourself. Eat healthy, sleep well, and exercise regularly.",
+            "Practice self-care. Engage in activities you enjoy, like reading or art.",
+            "Connect with friends and family for support.",
+            "Manage time effectively. Break big tasks into smaller steps.",
+            "Take breaks when you feel overwhelmed."
+        ]
+
+        print("\n--- Stress Management Tips ---\n")
+        speak("Here are some stress management tips.")
+        for tip in tips:
+            print(f"- {tip}")
+            speak(tip)
+            time.sleep(1)
+
+        print("\nTry applying these tips in your daily life.")
+        speak("Try applying these tips in your daily life.")
+
+    def gratitude_exercise(self):
+        print("\n--- Gratitude Exercise ---\n")
+        speak("Let's practice gratitude. Think about three things you are grateful for.")
+        gratitude = []
+
+        for i in range(3):
+            item = input(f"{i + 1}. I am grateful for: ")
+            gratitude.append(item)
+            speak(f"You said, {item}. That's wonderful.")
+
+        print("\nHere are the things you are grateful for:")
+        for item in gratitude:
+            print(f"- {item}")
+        speak("Gratitude helps us focus on the positive and feel better. Great work!")
+        speak("as you said said"f"-{item}" 'let it be with you')
+
+    def take_voice_input(self):
+        """Function to capture and return user voice input."""
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Listening for your choice...")
+            speak("Listening for your choice. Please say one of the displayed options.")
+            recognizer.adjust_for_ambient_noise(source)
+            audio = recognizer.listen(source)
+
+        try:
+            print("Recognizing...")
+            voice_input = recognizer.recognize_google(audio).lower()
+            print(f"You said: {voice_input}")
+            return voice_input
+        except sr.UnknownValueError:
+            speak("Sorry, I could not understand your request. Please try again.")
+            print("Could not understand the audio")
+            return None
+        except sr.RequestError:
+            speak("Sorry, there is an issue with the speech service. Please check your internet connection.")
+            print("Speech service is unavailable")
+            return None
+
+    def main_menu(self):
+        while True:
+            print("\n--- Stress Control App ---\n")
+            speak("Welcome to the Stress Control App. Please say one of the following options.")
+            print("1. Deep Breathing Exercise")
+            print("2. Positive Affirmations")
+            print("3. Stress Management Tips")
+            print("4. Gratitude Exercise")
+            print("5. Exit")
+
+            # Listen for user input using voice recognition
+            choice = None
+            while choice is None:
+                voice_input = self.take_voice_input()
+                if voice_input:
+                    if "deep breathing exercise" in voice_input:
+                        choice = 1
+                    elif "positive affirmations" in voice_input:
+                        choice = 2
+                    elif "stress management tips" in voice_input:
+                        choice = 3
+                    elif "gratitude exercise" in voice_input:
+                        choice = 4
+                    elif "exit" in voice_input:
+                        choice = 5
+                    else:
+                        speak("Sorry, I didn't catch that. Please say one of the displayed options.")
+                        print("Invalid choice, please say one of the displayed options.")
+
+            speak(f"You selected option {choice}.")
+
+            # Handle user's choice
+            if choice == 1:
+                self.deep_breathing_exercise()
+            elif choice == 2:
+                self.positive_affirmations()
+            elif choice == 3:
+                self.stress_management_tips()
+            elif choice == 4:
+                self.gratitude_exercise()
+            elif choice == 5:
+                print("\nThank you for using the app. Stay calm and healthy!")
+                speak("Thank you for using the Stress Control App. Stay calm and healthy!")
+                break
+
+
+if __name__ == '__main__':
+    app = Stresscontrol()
+    app.main_menu()
