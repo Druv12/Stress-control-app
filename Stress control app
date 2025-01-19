@@ -117,7 +117,7 @@ class Stresscontrol:
     def main_menu(self):
         while True:
             print("\n--- Stress Control App ---\n")
-            speak("Welcome to the Stress Control App. Please say one of the following options.")
+            speak("welcome to Stress Control App ")
             print("1. Deep Breathing Exercise")
             print("2. Positive Affirmations")
             print("3. Stress Management Tips")
@@ -140,9 +140,7 @@ class Stresscontrol:
                     elif "exit" in voice_input:
                         choice = 5
                     else:
-                        speak("Sorry, I didn't catch that. Please say one of the displayed options.")
-                        print("Invalid choice, please say one of the displayed options.")
-
+                        speak("Sorry, I didn't catch that. repeate again")
             speak(f"You selected option {choice}.")
 
             # Handle user's choice
@@ -156,7 +154,7 @@ class Stresscontrol:
                 self.gratitude_exercise()
             elif choice == 5:
                 print("\nThank you for using the app. Stay calm and healthy!")
-                speak("Thank you for using the Stress Control App. Stay calm and healthy!")
+                speak("Thank you for using the Stress Control App! Stay calm and healthy!")
                 break
 
 
